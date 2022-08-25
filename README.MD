@@ -10,11 +10,11 @@
 ```
 ### 1. Определение алгоритма с наилучшим сжатием (gzip,gzip9,zle,lzjb,lz4,zstd).
 
-Создаем пул zpool.
+Создаем пул zpool:
 ```
 zpool create zpool mirror /dev/sdb /dev/sdc
 ```
-Создаем несколько файловых систем ZFS, на каждой задаем свой алгоритм сжатия.
+Создаем несколько файловых систем ZFS, на каждой задаем свой алгоритм сжатия:
 ```
 zfs create zpool/gzip
 zfs create zpool/gzip9
@@ -54,7 +54,7 @@ zfs get compressratio
 wget -O /tmp/task2.tar.gz https://drive.google.com/u/0/uc?id=1KRBNW33QWqbvbVHa3hLJivOAt60yukkg
 cd /tmp && tar -zxvf task2.tar.gz
 ```
-Ищем файлы в каталоге доступные для импорта:
+Ищем файлы в каталоге, доступные для импорта:
 ```
 zpool import -d /tmp/zpoolexport/
 ```
@@ -81,13 +81,25 @@ zfs get checksum otus
 [Лог скрипта](/script2.log)
 
 ### 3. Находим сообщение от преподавателей.
+
 Копируем файл из удаленной директории (файл был получен командой `zfs send otus/storage@task2 > otus_task2.file`):
 ```
 wget -O /tmp/otus_task2.file https://drive.google.com/u/0/uc?id=1gH8gCL9y7Nd5Ti3IRmplZPF1XjzxeRAG
 ```
-Удаляем предыдущий пул `zpool destroy zpool`
+Выделим два файла для будущего пула ZFS:
+```
+cd /tmp && echo disk{1..2} | xargs -n 1 fallocate -l 500M
+```
 Создаем новый пул для снапшота:
 ```
-zpool create zpool mirror /dev/sdb /dev/sdd
+zpool create zpool2 /tmp/disk1 /tmp/disk2
 ```
+Находим файл secret_message и выводим его содержимое:
+```
+find /zpool2/message/ -name 'secret_message' | xargs cat
+```
+#### Результат:
 
+Зашифрованное сообщение: https://github.com/sindresorhus/awesome
+
+[Лог шагов](/script3.log)
