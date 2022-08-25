@@ -41,7 +41,7 @@ cp /tmp/War_and_Peace.txt /zpool/lz4/
 cp /tmp/War_and_Peace.txt /zpool/zstd/
 zfs get compressratio
 ```
-Вывод: 
+#### Результат: 
 [Лог скрипта](/script1.log)
 
 ### 2. Определение настроек импортированного пула ZFS.
@@ -57,21 +57,30 @@ zpool import -d /tmp/zpoolexport/
 ```
 Собираем пул и определяем его настройки:
 ```
-zpool import -d /tmp/zpoolexport/ from_otus
-zpool list from_otus
-zfs get recordsize from_otus
-zfs get compression from_otus
-zfs get checksum from_otus
+zpool import -d /tmp/zpoolexport/ otus
+zpool list otus
+zfs get recordsize otus
+zfs get compression otus
+zfs get checksum otus
 ```
-Вывод:
-```
-...
-```
+#### Результат:
+Настройки пула otus:
+* Размер хранилища: 
+* Тип пула: 
+* Значение recordsize: 
+* Тип сжатия: 
+* Контрольная сумма: 
+
 [Лог скрипта](/script2.log)
 
 ### 3. Находим сообщение от преподавателей.
 Копируем файл из удаленной директории (файл был получен командой `zfs send otus/storage@task2 > otus_task2.file`):
 ```
 wget -O /tmp/otus_task2.file https://drive.google.com/u/0/uc?id=1gH8gCL9y7Nd5Ti3IRmplZPF1XjzxeRAG
+```
+Удаляем предыдущий пул `zpool destroy zpool`
+Создаем новый пул для снапшота:
+```
+zpool create zpool mirror /dev/sdb /dev/sdd
 ```
 

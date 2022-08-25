@@ -1,0 +1,65 @@
+Script started on 2022-08-25 22:02:18+00:00
+]0;root@server:/vagrant[root@server vagrant]# zpool create zpool mirror /dev/sdb /dev/sdc
+]0;root@server:/vagrant[root@server vagrant]# zpool list
+NAME    SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+zpool   960M   100K   960M        -         -     0%     0%  1.00x    ONLINE  -
+]0;root@server:/vagrant[root@server vagrant]# zfs create zpool/gzip
+]0;root@server:/vagrant[root@server vagrant]# zfs create zpool/gzip9
+]0;root@server:/vagrant[root@server vagrant]# zfs create zpool/zle
+]0;root@server:/vagrant[root@server vagrant]# zfs create zpool/lzjb
+]0;root@server:/vagrant[root@server vagrant]# zfs create zpool/lz4
+]0;root@server:/vagrant[root@server vagrant]# zfs create zpool/zstd
+]0;root@server:/vagrant[root@server vagrant]# zfs set compression=gzip zpool/gzip
+]0;root@server:/vagrant[root@server vagrant]# zfs set compression=gzip-9 zpool/gzip9
+]0;root@server:/vagrant[root@server vagrant]# zfs set compression=zle zpool/zle
+]0;root@server:/vagrant[root@server vagrant]# zfs set compression=lzjb zpool/lzjb
+]0;root@server:/vagrant[root@server vagrant]# zfs set compression=lz4 zpool/lz4
+]0;root@server:/vagrant[root@server vagrant]# zfs set compression=zstd zpool/zstd
+]0;root@server:/vagrant[root@server vagrant]# zfs get compression
+NAME         PROPERTY     VALUE           SOURCE
+zpool        compression  off             default
+zpool/gzip   compression  gzip            local
+zpool/gzip9  compression  gzip-9          local
+zpool/lz4    compression  lz4             local
+zpool/lzjb   compression  lzjb            local
+zpool/zle    compression  zle             local
+zpool/zstd   compression  zstd            local
+]0;root@server:/vagrant[root@server vagrant]# wget -O War_and_Peace.txt http://www.gutenberg.org/ebooks/2600.txt.utf-8
+--2022-08-25 22:03:24--  http://www.gutenberg.org/ebooks/2600.txt.utf-8
+Resolving www.gutenberg.org (www.gutenberg.org)... 152.19.134.47
+Connecting to www.gutenberg.org (www.gutenberg.org)|152.19.134.47|:80... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://www.gutenberg.org/ebooks/2600.txt.utf-8 [following]
+--2022-08-25 22:03:25--  https://www.gutenberg.org/ebooks/2600.txt.utf-8
+Connecting to www.gutenberg.org (www.gutenberg.org)|152.19.134.47|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://www.gutenberg.org/cache/epub/2600/pg2600.txt [following]
+--2022-08-25 22:03:26--  https://www.gutenberg.org/cache/epub/2600/pg2600.txt
+Reusing existing connection to www.gutenberg.org:443.
+HTTP request sent, awaiting response... 200 OK
+Length: 3359372 (3.2M) [text/plain]
+Saving to: 'War_and_Peace.txt'
+
+War_and_Peace.txt                             0%[                                                                                            ]       0  --.-KB/s               War_and_Peace.txt                             2%[=>                                                                                          ]  97.63K   265KB/s               War_and_Peace.txt                             8%[======>                                                                                     ] 263.71K   463KB/s               War_and_Peace.txt                            20%[==================>                                                                         ] 687.71K   742KB/s               War_and_Peace.txt                            34%[==============================>                                                             ]   1.09M   845KB/s               War_and_Peace.txt                            63%[=========================================================>                                  ]   2.02M  1.33MB/s               War_and_Peace.txt                            74%[===================================================================>                        ]   2.39M  1.34MB/s               War_and_Peace.txt                           100%[===========================================================================================>]   3.20M  1.70MB/s    in 1.9s    
+
+2022-08-25 22:03:28 (1.70 MB/s) - 'War_and_Peace.txt' saved [3359372/3359372]
+
+]0;root@server:/vagrant[root@server vagrant]# cp /tmp/War_and_Peace.txt /zpool/gzip/
+]0;root@server:/vagrant[root@server vagrant]# cp /tmp/War_and_Peace.txt /zpool/gzip9/
+]0;root@server:/vagrant[root@server vagrant]# cp /tmp/War_and_Peace.txt /zpool/zle/
+]0;root@server:/vagrant[root@server vagrant]# cp /tmp/War_and_Peace.txt /zpool/lzjb/
+]0;root@server:/vagrant[root@server vagrant]# cp /tmp/War_and_Peace.txt /zpool/lz4/
+]0;root@server:/vagrant[root@server vagrant]# cp /tmp/War_and_Peace.txt /zpool/zstd/
+]0;root@server:/vagrant[root@server vagrant]# zfs get compressratio
+NAME         PROPERTY       VALUE  SOURCE
+zpool        compressratio  1.61x  -
+zpool/gzip   compressratio  2.67x  -
+zpool/gzip9  compressratio  2.67x  -
+zpool/lz4    compressratio  1.60x  -
+zpool/lzjb   compressratio  1.36x  -
+zpool/zle    compressratio  1.01x  -
+zpool/zstd   compressratio  1.00x  -
+]0;root@server:/vagrant[root@server vagrant]# exit
+exit
+
+Script done on 2022-08-25 22:03:55+00:00
