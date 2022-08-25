@@ -1,0 +1,59 @@
+Script started on 2022-08-25 22:37:11+00:00
+]0;root@server:/vagrant[root@server vagrant]# wget -O /tmp/task2.tar.gz https://drive.google.com/u/0/uc?id=1KRBNW33QWqbvbVHa3hLJivOAt60yukkg
+--2022-08-25 22:37:19--  https://drive.google.com/u/0/uc?id=1KRBNW33QWqbvbVHa3hLJivOAt60yukkg
+Resolving drive.google.com (drive.google.com)... 173.194.221.194
+Connecting to drive.google.com (drive.google.com)|173.194.221.194|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://drive.google.com/uc?id=1KRBNW33QWqbvbVHa3hLJivOAt60yukkg [following]
+--2022-08-25 22:37:20--  https://drive.google.com/uc?id=1KRBNW33QWqbvbVHa3hLJivOAt60yukkg
+Reusing existing connection to drive.google.com:443.
+HTTP request sent, awaiting response... 303 See Other
+Location: https://doc-0c-bo-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/gbllolnvkoip7tckgl4vpil1gfg10bnb/1661466975000/16189157874053420687/*/1KRBNW33QWqbvbVHa3hLJivOAt60yukkg?uuid=420b043a-fa92-40c5-bf90-080f75f2d3c7 [following]
+Warning: wildcards not supported in HTTP.
+--2022-08-25 22:37:25--  https://doc-0c-bo-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/gbllolnvkoip7tckgl4vpil1gfg10bnb/1661466975000/16189157874053420687/*/1KRBNW33QWqbvbVHa3hLJivOAt60yukkg?uuid=420b043a-fa92-40c5-bf90-080f75f2d3c7
+Resolving doc-0c-bo-docs.googleusercontent.com (doc-0c-bo-docs.googleusercontent.com)... 173.194.222.132
+Connecting to doc-0c-bo-docs.googleusercontent.com (doc-0c-bo-docs.googleusercontent.com)|173.194.222.132|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 7275140 (6.9M) [application/x-gzip]
+Saving to: '/tmp/task2.tar.gz'
+
+/tmp/task2.tar.gz                             0%[                                                                                            ]       0  --.-KB/s               /tmp/task2.tar.gz                             8%[=======>                                                                                    ] 622.74K  3.03MB/s               /tmp/task2.tar.gz                            29%[=========================>                                                                  ]   2.04M  4.25MB/s               /tmp/task2.tar.gz                            58%[====================================================>                                       ]   4.06M  5.98MB/s               /tmp/task2.tar.gz                            90%[=================================================================================>          ]   6.25M  7.12MB/s               /tmp/task2.tar.gz                           100%[===========================================================================================>]   6.94M  7.22MB/s    in 1.0s    
+
+2022-08-25 22:37:27 (7.22 MB/s) - '/tmp/task2.tar.gz' saved [7275140/7275140]
+
+]0;root@server:/vagrant[root@server vagrant]# cd /tmp && tar -zxvf task2.tar.gz
+zpoolexport/
+zpoolexport/filea
+zpoolexport/fileb
+]0;root@server:/tmp[root@server tmp]# zpool import -d /tmp/zpoolexport/
+   pool: otus
+     id: 6554193320433390805
+  state: ONLINE
+status: Some supported features are not enabled on the pool.
+	(Note that they may be intentionally disabled if the
+	'compatibility' property is set.)
+ action: The pool can be imported using its name or numeric identifier, though
+	some features will not be available without an explicit 'zpool upgrade'.
+ config:
+
+	otus                        ONLINE
+	  mirror-0                  ONLINE
+	    /tmp/zpoolexport/filea  ONLINE
+	    /tmp/zpoolexport/fileb  ONLINE
+]0;root@server:/tmp[root@server tmp]# zpool import -d /tmp/zpoolexport/ otus
+]0;root@server:/tmp[root@server tmp]# zpool list otus
+NAME   SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+otus   480M  2.21M   478M        -         -     0%     0%  1.00x    ONLINE  -
+]0;root@server:/tmp[root@server tmp]# zfs get recordsize otus
+NAME  PROPERTY    VALUE    SOURCE
+otus  recordsize  128K     local
+]0;root@server:/tmp[root@server tmp]# zfs get compression otus
+NAME  PROPERTY     VALUE           SOURCE
+otus  compression  zle             local
+]0;root@server:/tmp[root@server tmp]# zfs get checksum otus
+NAME  PROPERTY  VALUE      SOURCE
+otus  checksum  sha256     local
+]0;root@server:/tmp[root@server tmp]# exit
+exit
+
+Script done on 2022-08-25 22:38:23+00:00
