@@ -70,8 +70,11 @@ zfs get checksum otus
 * Значение recordsize: 128k
 * Тип сжатия: zle
 * Контрольная сумма: sha256
+
 [Файл настроек zfs otus](/zfs_settings_otus.txt]
+
 [Файл настроек zpool otus](/zpool_settings_otus.txt)
+
 [Лог скрипта](/script2.log)
 
 ### 3. Находим сообщение от преподавателей.
