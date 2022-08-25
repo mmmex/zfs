@@ -71,7 +71,7 @@ zfs get checksum otus
 * Тип сжатия: zle
 * Контрольная сумма: sha256
 
-[Файл настроек zfs otus](/zfs_settings_otus.txt]
+[Файл настроек zfs otus](/zfs_settings_otus.txt)
 
 [Файл настроек zpool otus](/zpool_settings_otus.txt)
 
