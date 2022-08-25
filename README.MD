@@ -41,7 +41,10 @@ cp /tmp/War_and_Peace.txt /zpool/lz4/
 cp /tmp/War_and_Peace.txt /zpool/zstd/
 zfs get compressratio
 ```
-#### Результат: 
+#### Результат:
+
+Наилучшее сжатие у gzip (результат 2.67x)
+
 [Лог скрипта](/script1.log)
 
 ### 2. Определение настроек импортированного пула ZFS.
