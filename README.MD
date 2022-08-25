@@ -94,6 +94,10 @@ cd /tmp && echo disk{1..2} | xargs -n 1 fallocate -l 500M
 ```
 zpool create zpool2 /tmp/disk1 /tmp/disk2
 ```
+Восстанавливаем файл snapshot:
+```
+zfs receive zpool2/message < /tmp/otus_task2.file
+```
 Находим файл secret_message и выводим его содержимое:
 ```
 find /zpool2/message/ -name 'secret_message' | xargs cat
@@ -102,4 +106,4 @@ find /zpool2/message/ -name 'secret_message' | xargs cat
 
 Зашифрованное сообщение: https://github.com/sindresorhus/awesome
 
-[Лог шагов](/script3.log)
+[Лог выполнения комманд](/script3.log)

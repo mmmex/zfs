@@ -1,0 +1,32 @@
+Script started on 2022-08-25 23:51:11+00:00
+]0;root@server:/vagrant[root@server vagrant]# wget -O /tmp/otus_task2.file https://drive.google.com/u/0/uc?id=1gH8gCL9y7Nd5Ti3IRmplZPF1XjjzxeRAG
+--2022-08-25 23:51:20--  https://drive.google.com/u/0/uc?id=1gH8gCL9y7Nd5Ti3IRmplZPF1XjzxeRAG
+Resolving drive.google.com (drive.google.com)... 108.177.14.194
+Connecting to drive.google.com (drive.google.com)|108.177.14.194|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://drive.google.com/uc?id=1gH8gCL9y7Nd5Ti3IRmplZPF1XjzxeRAG [following]
+--2022-08-25 23:51:21--  https://drive.google.com/uc?id=1gH8gCL9y7Nd5Ti3IRmplZPF1XjzxeRAG
+Reusing existing connection to drive.google.com:443.
+HTTP request sent, awaiting response... 303 See Other
+Location: https://doc-00-bo-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/8s66n8vtn9fmsk42bkb67mlaocgk31s9/1661471475000/16189157874053420687/*/1gH8gCL9y7Nd5Ti3IRmplZPF1XjzxeRAG?uuid=3083a661-2165-4bb7-8bd7-18a5b9ce83fd [following]
+Warning: wildcards not supported in HTTP.
+--2022-08-25 23:51:22--  https://doc-00-bo-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/8s66n8vtn9fmsk42bkb67mlaocgk31s9/1661471475000/16189157874053420687/*/1gH8gCL9y7Nd5Ti3IRmplZPF1XjzxeRAG?uuid=3083a661-2165-4bb7-8bd7-18a5b9ce83fd
+Resolving doc-00-bo-docs.googleusercontent.com (doc-00-bo-docs.googleusercontent.com)... 173.194.222.132
+Connecting to doc-00-bo-docs.googleusercontent.com (doc-00-bo-docs.googleusercontent.com)|173.194.222.132|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5432736 (5.2M) [application/octet-stream]
+Saving to: '/tmp/otus_task2.file'
+
+/tmp/otus_task2.file           0%[                                            ]       0  --.-KB/s               /tmp/otus_task2.file           4%[=>                                          ] 249.84K  1.21MB/s               /tmp/otus_task2.file          28%[===========>                                ]   1.49M  3.20MB/s               /tmp/otus_task2.file          46%[===================>                        ]   2.41M  3.59MB/s               /tmp/otus_task2.file          77%[=================================>          ]   4.02M  4.52MB/s               /tmp/otus_task2.file         100%[===========================================>]   5.18M  5.50MB/s    in 0.9s    
+
+2022-08-25 23:51:23 (5.50 MB/s) - '/tmp/otus_task2.file' saved [5432736/5432736]
+
+]0;root@server:/vagrant[root@server vagrant]# cd /tmp && echo disk{1..2} | xargs -n 1 fallocate -l 500M
+]0;root@server:/tmp[root@server tmp]# zpool create zpool2 /tmp/disk1 /tmp/disk2
+]0;root@server:/tmp[root@server tmp]# zfs receive zpool2/message < /tmp/otus_task2.file
+]0;root@server:/tmp[root@server tmp]# find /zpool2/message/ -name 'secret_message' | xargs cat
+https://github.com/sindresorhus/awesome
+]0;root@server:/tmp[root@server tmp]# exit
+exit
+
+Script done on 2022-08-25 23:52:08+00:00
